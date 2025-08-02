@@ -13,8 +13,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
-    "vercel-build": "tsc",
-    "postinstall": "tsc || true"
+    "postinstall": "tsc"
   },
   "keywords": [
     "api",
