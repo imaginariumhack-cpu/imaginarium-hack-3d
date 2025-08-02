@@ -11,7 +11,7 @@ import { errorHandler, notFoundHandler } from '@presentation/middleware/errorHan
 import { Container } from '@infrastructure/container/Container';
 import { config } from '@shared/config/config';
 import { swaggerOptions } from '@shared/config/swagger';
-import logger from '@shared/utils/logger';
+import logger from '@shared/utils/logger'; 
 
 export const createApp = (): express.Application => {
   const app = express();
