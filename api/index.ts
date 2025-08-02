@@ -1,10 +1,17 @@
 ﻿import { createApp } from "../src/app";
-import { connectDatabase } from "../src/infrastructure/database/connection";
+import { DatabaseConnection } from "../src/infrastructure/database/connection";
 import { validateConfig } from "../src/shared/config/config";
 import logger from "../src/shared/utils/logger";
 
 // Configurar module alias para Vercel
-require("module-alias/register");
+import * as moduleAlias from "module-alias";
+moduleAlias.addAliases({
+  "@domain": __dirname + "/../src/domain",
+  "@application": __dirname + "/../src/application", 
+  "@infrastructure": __dirname + "/../src/infrastructure",
+  "@presentation": __dirname + "/../src/presentation",
+  "@shared": __dirname + "/../src/shared"
+});
 
 let cachedApp: any = null;
 let isConnected = false;
@@ -20,7 +27,8 @@ const initializeApp = async () => {
     
     // Conectar a la base de datos solo una vez
     if (!isConnected) {
-      await connectDatabase();
+      const db = DatabaseConnection.getInstance();
+      await db.connect();
       isConnected = true;
     }
     
