@@ -1,14 +1,14 @@
 {
   "version": 2,
   "functions": {
-    "api/index.js": {
+    "api/index.ts": {
       "runtime": "@vercel/node@3.0.0"
     }
   },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/index.js"
+      "destination": "/dist/api/index.js"
     }
   ],
   "env": {
