@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node api/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
@@ -13,7 +13,8 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
-    "postinstall": "tsc"
+    "postinstall": "npm run build",
+    "vercel-build": "tsc"
   },
   "keywords": [
     "api",

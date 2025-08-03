@@ -12,11 +12,14 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "ENABLE_SWAGGER": "true"
   },
   "build": {
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "ENABLE_SWAGGER": "true"
     }
-  }
+  },
+  "buildCommand": "npm run build"
 }

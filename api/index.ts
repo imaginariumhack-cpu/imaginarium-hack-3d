@@ -6,11 +6,11 @@ import logger from "../dist/shared/utils/logger";
 // Configurar module alias para Vercel
 import * as moduleAlias from "module-alias";
 moduleAlias.addAliases({
-  "@domain": __dirname + "/../src/domain",
-  "@application": __dirname + "/../src/application", 
-  "@infrastructure": __dirname + "/../src/infrastructure",
-  "@presentation": __dirname + "/../src/presentation",
-  "@shared": __dirname + "/../src/shared"
+  "@domain": __dirname + "/../dist/domain",
+  "@application": __dirname + "/../dist/application", 
+  "@infrastructure": __dirname + "/../dist/infrastructure",
+  "@presentation": __dirname + "/../dist/presentation",
+  "@shared": __dirname + "/../dist/shared"
 });
 
 let cachedApp: any = null;
@@ -48,10 +48,32 @@ const initializeApp = async () => {
 // Handler para Vercel (Serverless Function)
 export default async (req: any, res: any) => {
   try {
+    // Configurar headers para CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // Manejar preflight OPTIONS requests
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+
     const app = await initializeApp();
     return app(req, res);
   } catch (error: any) {
     console.error("Error en handler de Vercel:", error);
+    
+    // Si es un error de módulo no encontrado, probablemente el build falló
+    if (error.code === 'MODULE_NOT_FOUND') {
+      return res.status(500).json({
+        success: false,
+        message: "Error de compilación del servidor",
+        error: "Los archivos TypeScript no han sido compilados correctamente",
+        timestamp: new Date().toISOString()
+      });
+    }
+    
     return res.status(500).json({
       success: false,
       message: "Error interno del servidor",
