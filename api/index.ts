@@ -1,7 +1,7 @@
-﻿import { createApp } from "../src/app";
-import { DatabaseConnection } from "../src/infrastructure/database/connection";
-import { validateConfig } from "../src/shared/config/config";
-import logger from "../src/shared/utils/logger";
+﻿import { createApp } from "../dist/app";
+import { DatabaseConnection } from "../dist/infrastructure/database/connection";
+import { validateConfig } from "../dist/shared/config/config";
+import logger from "../dist/shared/utils/logger";
 
 // Configurar module alias para Vercel
 import * as moduleAlias from "module-alias";
