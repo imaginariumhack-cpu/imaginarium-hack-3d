@@ -35,7 +35,7 @@ const initializeApp = async () => {
     // Crear aplicación
     if (!cachedApp) {
       cachedApp = createApp();
-      console.log("✅ Aplicación inicializada para Vercel");
+      console.log("✅ Aplicación inicializada para Vercel.");
       console.log("📊 ENABLE_SWAGGER:", process.env.ENABLE_SWAGGER);
       console.log("🌍 NODE_ENV:", process.env.NODE_ENV);
     }
