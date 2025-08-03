@@ -98,7 +98,7 @@ export const createApp = (): express.Application => {
   app.get('/health', (req, res) => {
     res.status(200).json({
       success: true,
-      message: 'API funcionando correctamente',
+      message: 'API funcionando correctamente. Todo va bien.',
       timestamp: new Date().toISOString(),
       version: '1.0.0',
       environment: config.nodeEnv,
