@@ -35,18 +35,22 @@ const initializeApp = async () => {
     // Crear aplicación
     if (!cachedApp) {
       cachedApp = createApp();
-      logger.info("Aplicación inicializada para Vercel");
+      console.log("✅ Aplicación inicializada para Vercel");
+      console.log("📊 ENABLE_SWAGGER:", process.env.ENABLE_SWAGGER);
+      console.log("🌍 NODE_ENV:", process.env.NODE_ENV);
     }
     
     return cachedApp;
   } catch (error) {
-    logger.error("Error inicializando aplicación:", error);
+    console.error("❌ Error inicializando aplicación:", error);
     throw error;
   }
 };
 
 // Handler para Vercel (Serverless Function)
 export default async (req: any, res: any) => {
+  console.log(`🔥 Request recibido: ${req.method} ${req.url}`);
+  
   try {
     // Configurar headers para CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -60,16 +64,19 @@ export default async (req: any, res: any) => {
     }
 
     const app = await initializeApp();
+    console.log("🚀 App inicializada, procesando request...");
     return app(req, res);
   } catch (error: any) {
-    console.error("Error en handler de Vercel:", error);
+    console.error("💥 Error en handler de Vercel:", error);
     
     // Si es un error de módulo no encontrado, probablemente el build falló
     if (error.code === 'MODULE_NOT_FOUND') {
+      console.error("📦 Error de módulo no encontrado:", error.message);
       return res.status(500).json({
         success: false,
         message: "Error de compilación del servidor",
         error: "Los archivos TypeScript no han sido compilados correctamente",
+        details: error.message,
         timestamp: new Date().toISOString()
       });
     }

@@ -71,5 +71,7 @@ export const swaggerConfig = {
 
 export const swaggerOptions = {
   definition: swaggerConfig,
-  apis: ["./src/presentation/routes/*.ts"]
+  apis: process.env.NODE_ENV === 'production' 
+    ? ["./dist/presentation/routes/*.js"]
+    : ["./src/presentation/routes/*.ts"]
 }; 

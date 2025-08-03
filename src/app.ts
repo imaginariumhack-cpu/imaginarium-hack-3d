@@ -110,6 +110,28 @@ export const createApp = (): express.Application => {
     });
   });
 
+  // Debug endpoint para Vercel
+  app.get('/debug', (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'Debug endpoint funcionando',
+      environment: {
+        NODE_ENV: process.env.NODE_ENV,
+        ENABLE_SWAGGER: process.env.ENABLE_SWAGGER,
+        PORT: process.env.PORT
+      },
+      config: {
+        nodeEnv: config.nodeEnv,
+        swaggerEnabled: config.nodeEnv === 'development' || process.env.ENABLE_SWAGGER === 'true'
+      },
+      paths: {
+        __dirname: __dirname,
+        cwd: process.cwd()
+      },
+      timestamp: new Date().toISOString()
+    });
+  });
+
   // Endpoint raíz para Vercel
   app.get('/', (req, res) => {
     res.status(200).json({
